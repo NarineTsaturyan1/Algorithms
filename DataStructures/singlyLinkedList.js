@@ -146,4 +146,68 @@ class SLL {
     }
     this.head = prev;
   }
+  
+  getMiddleNode() {
+    let slow = this.head;
+    let fast = this.head.next;
+    while(fast !== null && fast.next !== null) {
+      fast = fast.next.next;
+      slow = slow.next;
+    }
+    return slow;
+  }
+
+  merge(h1, h2) {
+    let dummyHead = new Node();
+    let current = dummyHead;
+  
+    while (h1 !== null && h2 !== null) {
+      if (h1.data < h2.data) {
+        current.next = h1;
+        h1 = h1.next;
+      } else {
+        current.next = h2;
+        h2 = h2.next;
+      }
+      current = current.next;
+    }
+    if (h1 !== null) {
+      current.next = h1;
+    }
+    if (h2 !== null) {
+      current.next = h2;
+    }
+    return dummyHead.next;
+  }
+
+  insertionSort() {
+    let node = new ListNode();
+    while(this.head){
+        let tmp = this.head.next;
+        let curr = node;
+        while(curr.next && curr.next.data <= this.head.data) {
+            curr = curr.next;
+        }
+        this.head.next = curr.next;
+        curr.next = this.head;
+        this.head = tmp;
+    }
+    return node.next;
+  }
+
+  hasCycle() {
+    if (this.head === null || this.head.next === null) {
+      return false;
+    }
+    let slow = this.head;
+    let fast = this.head.next;
+    while(fast !== null && fast.next !== null) {
+      if(fast === slow) {
+        return true;
+      }
+      slow = slow.next;
+      fast = fast.next.next;
+    }
+    return false;
+  }
 }
